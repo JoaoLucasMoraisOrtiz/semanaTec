@@ -2,6 +2,7 @@ from app.help.connection import Connection
 
 
 class DbMethods:
+    
     def dbActions(table, action, data=''):
         conn = Connection.conn()
         cursor = conn.cursor()

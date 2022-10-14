@@ -42,5 +42,6 @@ class BaseWindow:
         #adciona o second_frame quando a janela é criada, fazendo-o ocupar toda a janela no width
         my_canvas.create_window((0,0), window=second_frame, anchor='nw', width=int(size[0:int(size.find('x'))])-10)
 
+        
         #retorna o second_frame, que é onde devemos inserir os objetos de nossa janela
         return second_frame

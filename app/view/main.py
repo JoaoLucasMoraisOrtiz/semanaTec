@@ -12,13 +12,6 @@ from tkhtmlview import HTMLLabel
 
 class MainWin:
 
-    def getorigin(eventorigin):
-        x0 = 0
-        y0 = 0
-        x0 = eventorigin.x
-        y0 = eventorigin.y
-        print(x0,y0)
-
     def showMainWindow(args):
         
         # coordenadas X e Y da janlea
@@ -33,11 +26,10 @@ class MainWin:
         window = BaseWindow.start('main', f'{x}x{y}')
 
         # cria o botão de nova tarefa, e o fixa no topo à direita
-        btn = Button(window, text='Novo', bg="green", height=1)
-        btn.pack(anchor='ne')
+        btn = Button(window, text='Novo', bg="green", height=2)
+        btn.pack(anchor=tkinter.NE)
 
         # cria os cards de tarefas
-        r = 0
         html_label = ''
         arr = []
         bdel = []
@@ -52,17 +44,19 @@ class MainWin:
             #body = Label(window)
             card = html[c]
             html_label = HTMLLabel(window, html=card, width=50, height=10)
-            print((c-3*r)*30 )
+
             if(c == 0):
                 
-                html_label.pack(side=tkinter.RIGHT)
+                html_label.pack(side=tkinter.TOP)
             elif(c%3 != 0):
-                
-                html_label.pack(side=tkinter.RIGHT)
-            else:
-                r = r + 1
-                
-                html_label.pack(side=tkinter.BOTTOM)
+
+                if((c+1)%3 == 0):
+                    html_label.pack(side=tkinter.TOP)
+                else:
+                    html_label.pack(side=tkinter.TOP)
+
+            elif(c%3 == 0 ):
+                html_label.pack(side=tkinter.TOP)
 
             #body.pack()
             arr.append([html_label, c])  

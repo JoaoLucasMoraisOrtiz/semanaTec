@@ -16,9 +16,12 @@ class BaseWindow:
         return start_menu
 
     # método responsável por criar nossa instância de janela
-    def start(name, size):
+    def start(name, size, instance=0):
 
-        window = BaseWindow.preparation(name, size)
+        if instance != 0:
+            window = instance
+        else:
+            window = BaseWindow.preparation(name, size)
 
         # cria um frame principal
         main_frame = Frame(window)

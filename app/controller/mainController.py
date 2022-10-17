@@ -1,15 +1,22 @@
-from tkinter.font import names
-from app.help.View import View
 from app.view.main import MainWin
+from app.controller.createController import createController
 from app.API.tasks import DbMethods
+from tkinter import messagebox
 from json import load
 
 cond = 1
 
 class mainController:
 
-    def create():
-        print('the skys are blue')
+    def create(window):
+
+        create = createController
+        create.getCreate(window)
+        messagebox.showinfo(
+                    'Recarregar', f'A janela ira recarregar!')
+        window.destroy()
+        mainController.getMain()
+
 
     def delete(e, n):
         
@@ -56,27 +63,21 @@ class mainController:
         # Gera as variáveis
         elem = window.showMainWindow(args)
 
-        """ for element in elem[1][1]:
-            print(element)
-            element.bind('<Button-1>',  lambda e:print(e)) """
-
         n = [0, 1, 2] 
         b=0
         command = ''
         for count in range(0, len(elem[1])):
             command = f"""elem[1][{count}][0].bind('<Button-1>', lambda e: mainController.delete({count}, elem[1]))"""
-            exec(command)
-
-            
+            exec(command)        
 
         
-
-        elem[0].configure(command=lambda: mainController.create())
-
         parent = elem[2]._nametowidget(elem[2].winfo_parent())
         grand_parent = parent._nametowidget(parent.winfo_parent())
         instance = parent._nametowidget(grand_parent.winfo_parent())
 
+        elem[0].configure(command=lambda: mainController.create(instance))
+
+        
         global cond
         # cria o loop que mantem a janela na tela
         while cond:
@@ -91,7 +92,15 @@ class mainController:
                     else:
                         # deleta do banco de dados a tarefa
                         print(elem[1][c], ' FOI DE BASE')
-                        elem[1].pop(c)
+                        print(tasks[elem[1][c][1]])
+                        data = {"id": tasks[elem[1][c][1]][0]}
+                        print(data)
+                        db.dbActions('tasks', 'DELETE', data)
+                        messagebox.showinfo(
+                                    'Recarregar', f'A janela ira recarregar!')
+                        instance.destroy()
+                        mainController.getMain()
+                        
                 except:
                     pass
 

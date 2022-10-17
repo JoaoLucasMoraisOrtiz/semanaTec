@@ -1,5 +1,5 @@
 # importa a classe priority
-from app.model.Priority import Priority
+from app.controller.Priority import Priority
 
 #importa as ações do banco de dados
 from app.API.tasks import DbMethods
@@ -7,11 +7,11 @@ from app.API.tasks import DbMethods
 # array de exemplo
 arr = {
     "name": "Fazer o TCC",
-    "date": "2022-10-16",
+    "date": "2030-1-12",
     "timeToDo": 3,
-    "timeToConc": "07:10",
+    "timeToConc": "00:00",
     "prog": "70",
-    "selfPri": 1,
+    "selfPri": 0,
     "color": '0xffffff',
     "priority": 0
 }

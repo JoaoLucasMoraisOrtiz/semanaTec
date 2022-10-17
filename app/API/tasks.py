@@ -11,7 +11,7 @@ class DbMethods:
         if (action.upper() == 'CREATE'):
             try:
                 insert = f"INSERT INTO {table} VALUES ({0}, \" {data['name']} \", \"{data['date']}\", \"{data['timeToDo']}\", \"{data['timeToConc']}\", {data['prog']}, {data['selfPri']}, \"{data['color']}\", \"{data['priority']}\")"
-                print(insert)
+                #print(insert)
                 
                 cursor.execute(insert)
                 conn.commit()
@@ -61,7 +61,7 @@ class DbMethods:
         elif (action.upper() == 'DELETE'):
             try:
                 delete = f'DELETE FROM {table} WHERE {list(data.keys())[0]}=\"{data[list(data.keys())[0]]}\";'
-                print(delete)
+                #print(delete)
                 cursor.execute(delete)
                 conn.commit()
             except ValueError:

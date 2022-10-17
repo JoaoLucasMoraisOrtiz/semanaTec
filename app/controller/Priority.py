@@ -39,7 +39,7 @@ class Priority:
             p = color
 
         else:
-            color = 0xffff8d
+            color = '0xffff8d'
             p = color
 
         return p
@@ -133,9 +133,9 @@ class Priority:
 
                         # se o tempo que demora para realizar a tarefa não estivar vazio
                         if (arr['timeToDo'] != ''):
-
+                            
                             # caso a distância de hoje até a data de entrega seja menor ou igual ao tempo de realização
-                            if (datetime.timedelta(arr['timeToDo']) + datetime.date.today() >= d):
+                            if (datetime.timedelta(int(arr['timeToDo'])) + datetime.date.today() >= d):
                                 a += 1
                                 break
                             else:

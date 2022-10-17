@@ -1,24 +1,26 @@
-from calendar import month
-from pickle import TRUE
 from app.view.create import CreateWin
 from app.controller.Priority import Priority
 from app.API.tasks import DbMethods
 from tkinter import END, messagebox
-import asyncio
 import re
-
+from json import load
 
 # variáveis globais
 cond = 1
 
+f = open('secrets.json')
+data = load(f)
+table = data['taskTable']
 
 class createController:
 
     def awaitReturn(task):
+        global table
+
         calculator = Priority
         arr = calculator.priority(task)
         db = DbMethods
-        db.dbActions('tasks', 'CREATE', arr)
+        db.dbActions(table, 'CREATE', arr)
         return True
 
     def dataMatch(data, mainWin):

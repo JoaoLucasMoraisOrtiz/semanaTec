@@ -4,6 +4,11 @@ from app.API.tasks import DbMethods
 from tkinter import messagebox
 from json import load
 
+# pega o json com os secrets
+f = open('secrets.json')
+data = load(f)
+table = data['taskTable']
+
 cond = 1
 
 class mainController:
@@ -31,18 +36,16 @@ class mainController:
 
     def getMain():
 
+        global table
+
         # instancia a mainWindow
         window = MainWin
 
         # instancia DbMethods
         db = DbMethods
 
-        # pega o json com os secrets
-        f = open('secrets.json')
-        data = load(f)
-
         # get dos dados do banco de dados
-        tasks = db.dbActions(data['taskTable'], 'GET')
+        tasks = db.dbActions(table, 'GET')
 
         # ordena por prioridade
         tasks = sorted(tasks, key=lambda d: d[-1], reverse=True)
@@ -95,7 +98,7 @@ class mainController:
                         print(tasks[elem[1][c][1]])
                         data = {"id": tasks[elem[1][c][1]][0]}
                         print(data)
-                        db.dbActions('tasks', 'DELETE', data)
+                        db.dbActions(table, 'DELETE', data)
                         messagebox.showinfo(
                                     'Recarregar', f'A janela ira recarregar!')
                         instance.destroy()

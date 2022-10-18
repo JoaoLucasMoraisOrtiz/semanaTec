@@ -5,6 +5,7 @@ from math import ceil
 
 class Priority:
 
+    # calcula a cor da tarefa
     def setColor(p):
         if (0.9 < p):
             color = '0xf00000'
@@ -44,68 +45,77 @@ class Priority:
 
         return p
 
+    # calcula sobre a prioridade base a prioridade do usuário
     def userPriority(p):
 
+        pri = 0
         if (0.9 < p):
-            p += 0.45
+            pri += 0.33/p**(0.33/100)
 
-        elif (0.8 < p < 0.9):
-            p += 0.4
+        elif (0.8 < p <= 0.9):
+            pri += 0.28/p**(0.28/100)
 
-        elif (0.7 < p < 0.8):
-            p += 0.35
+        elif (0.7 < p <= 0.8):
+            pri += 0.24/p**(0.24/100)
 
-        elif (0.6 < p < 0.7):
-            p += 0.3
+        elif (0.6 < p <= 0.7):
+            pri += 0.20/p**(0.20/100)
 
-        elif (0.5 < p < 0.6):
-            p += 0.25
+        elif (0.5 < p <= 0.6):
+            pri += 0.16/p**(0.16/100)
 
-        elif (0.4 < p < 0.5):
-            p += 0.2
+        elif (0.4 < p <= 0.5):
+            pri += 0.12/p**(0.12/100)
 
-        elif (0.3 < p < 0.4):
-            p += 0.20
+        elif (0.3 < p <= 0.4):
+            pri += 0.08/p**(0.08/100)
 
-        elif (0.2 < p < 0.3):
-            p += 0.15
+        elif (0.2 < p <= 0.3):
+            pri += 0.04/p**(0.04/100)
 
         else:
-            p += 0.1
+            pri += 0.0
 
-        return p
+        return pri
 
+    # calcula sobre a prioridade base a prioridade da progreção
     def progPriority(p):
-        a = 0
-        if (0 < p < 10):
-            a += 0.50
+         
+        pri = 0
+        
+        if(p == 0):
+            p = 0.001
 
-        elif (10 < p < 20):
-            a += 0.45
+        if (0.2 >= p ):
+            pri += 0.33/p**(0.33/100)
 
-        elif (20 < p < 30):
-            a += 0.4
+        elif (0.3 > p <= 0.4):
+            pri += 0.28/p**(0.28/100)
 
-        elif (30 < p < 40):
-            a += 0.35
+        elif (0.4 > p <= 0.5):
+            pri += 0.24/p**(0.24/100)
 
-        elif (40 < p < 50):
-            a += 0.3
+        elif (0.5 > p <= 0.6):
+            pri += 0.20/p**(0.20/100)
 
-        elif (60 < p < 70):
-            a += 0.25
+        elif (0.6 > p <= 0.7):
+            pri += 0.16/p**(0.16/100)
 
-        elif (70 < p < 80):
-            a += 0.2
+        elif (0.7 > p <= 0.8):
+            pri += 0.12/p**(0.12/100)
 
-        elif (80 < p < 90):
-            a += 0.25
+        elif (0.8 > p <= 0.9):
+            pri += 0.08/p**(0.08/100)
+
+        elif (0.9 > p):
+            pri += 0.04/p**(0.04/100)
 
         else:
-            a += 0.1
+            pri += 0.0
 
-        return a
+        return pri
 
+    # calcula sobre a prioridade base a prioridade segundo a data
     def datePriority(d, arr):
         a = 0
 
@@ -126,7 +136,7 @@ class Priority:
             if (datetime.datetime.today().date() + datetime.timedelta(days=7) >= d):  # type: ignore
 
                 # percorre por 7 dias para saber quantos dias faltam para o acontecimento
-                for c in range(1, 7, 1):
+                for c in range(1, 8, 1):
 
                     # encontra quanto tempo falta para o acontecimento, o tempo em dias é c
                     if (datetime.date.today() + datetime.timedelta(days=c) == d):
@@ -169,16 +179,21 @@ class Priority:
         # recebe a data em dias de nossa tarefa
         d = datetime.datetime.strptime(arr["date"], "%Y-%m-%d").date()
 
+        print(f'prioridade na entrada: {p}')
+        
         if (p < 1):
             p += Priority.datePriority(d, arr)
+            print(f'prioridade após o calculo sobre a data: {p}')
 
         if (p < 1):
             # calcula a prioridade setada pelo usuário
-            p += Priority.userPriority(p)
+            p += Priority.userPriority(arr['selfPri'])
+            print(f'prioridade após o calculo sobre a prioridade do user: {p}')
 
         if (p < 1):
             # calcula a prioridade quanto ao progreço do projeto
             p += Priority.progPriority(p)
+            print(f'prioridade após o calculo sobre a progressão: {p}')
 
         # calcula a cor
         arr['color'] = Priority.setColor(p)
